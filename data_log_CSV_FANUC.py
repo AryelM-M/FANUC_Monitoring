@@ -5,6 +5,7 @@ import time
 import threading
 from datetime import datetime, timedelta
 import sys
+import traceback
 
 last_fetch_time = None  # Variable to store the timestamp of the last fetch
 
@@ -43,6 +44,7 @@ def main(url, output_filename):
         print(f"Data has been written to {output_filename}")
     except Exception as e:
         print(f"An error occurred: {e}")
+        traceback.print_exc()  # Print the full traceback for debugging
 
 def repeat_every_interval(interval, url, output_filename):
     while True:
@@ -57,7 +59,7 @@ if len(sys.argv) > 1:
 else:
     output_filename = 'output.csv'
 
-interval = 0.01  # Interval in seconds (0.01 seconds = 10 milliseconds)
+interval = 0.05  # Interval in seconds (0.05 seconds = 50 milliseconds)
 
 url = 'http://192.168.137.100/KAREL/API_MOTION_LOG'
 
@@ -72,3 +74,4 @@ try:
         time.sleep(1)
 except KeyboardInterrupt:
     print("Program terminated.")
+    thread.join()  # Ensure the thread completes gracefully

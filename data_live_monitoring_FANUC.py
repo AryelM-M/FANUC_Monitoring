@@ -71,7 +71,7 @@ def plot_real_time(csv_file):
             print("Plotting terminated.")
             break
         except Exception as e:
-            print(f"An error occurred: {e}")
+            print(f"An error in monitoring occurred: {e}")
             time.sleep(1)  # Wait and retry if an error occurs
 
 # Example usage
