@@ -59,7 +59,7 @@ if len(sys.argv) > 1:
 else:
     output_filename = 'output.csv'
 
-interval = 0.05  # Interval in seconds (0.05 seconds = 50 milliseconds)
+interval = 0.01  # Interval in seconds (0.05 seconds = 50 milliseconds)
 
 url = 'http://192.168.137.100/KAREL/API_MOTION_LOG'
 

@@ -5,6 +5,7 @@ import signal
 import time
 import easygui as eg
 
+
 # Path to the Python executable in the virtual environment
 python_executable = os.path.join('.venv', 'Scripts', 'python.exe')
 
