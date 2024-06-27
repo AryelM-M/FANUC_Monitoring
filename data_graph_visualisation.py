@@ -6,7 +6,7 @@ import sys
 
 # Change to 1 if you want to compare machine data with loadcell data.
 # You need to save the loadcell data in a csv file named 'ldcl_' + the name of the other csv file
-USE_LOADCELL_DATA = 1
+USE_LOADCELL_DATA = 0
 # Change the duration in seconds of a sample after a hit
 SAMPLE_TIME = 60
 
@@ -46,25 +46,23 @@ def plot_data(csv_file):
             resultant_speed.append(magnitude_s)
     resultant_speed.append(0)
 
-
-    # Ajust time range of robot to start at impact signal (Hit to start)
-    i = 0
-    j = 0
-    max_time = 1000 * SAMPLE_TIME # Time in milliseconds the user wants to see
-    time_elapsed = 0
-
-    # Ajust time range of loadcell and robot to start at impact signal (Hit to start)
-    while not resultant_force[i] > 10 :
-        i = i + 1
-    t_passed = i
-    while time_elapsed < max_time :
-        time_elapsed += df['milliseconds_passed'][t_passed]
-        t_passed = t_passed + 1
-    resultant_force = resultant_force[i:t_passed]
-    time_now = time_now[i:t_passed]
-
- 
     if USE_LOADCELL_DATA == 1:
+        # Ajust time range of robot to start at impact signal (Hit to start)
+        i = 0
+        j = 0
+        max_time = 1000 * SAMPLE_TIME # Time in milliseconds the user wants to see
+        time_elapsed = 0
+
+        # Ajust time range of loadcell and robot to start at impact signal (Hit to start)
+        while not resultant_force[i] > 10 :
+            i = i + 1
+        t_passed = i
+        while time_elapsed < max_time :
+            time_elapsed += df['milliseconds_passed'][t_passed]
+            t_passed = t_passed + 1
+        resultant_force = resultant_force[i:t_passed]
+        time_now = time_now[i:t_passed]
+
         while ldcl['Newton'][j] < 10 :
             j = j + 1
         t_passed = j
@@ -90,10 +88,13 @@ def plot_data(csv_file):
     
     if USE_LOADCELL_DATA == 1:
         ax2.plot(time_ldcl, force_ldcl, label='External Force (N)')
-    else : ax2.plot(time_now, df['mch_spd'], label='Machine Speed (mm/s)')
-    ax2.set_title('External Force of Loadcell')
+        ax2.set_title('External Force of Loadcell')
+        ax2.set_ylabel('Force of loadcell (N)')
+    else : 
+        ax2.plot(time_now, df['mch_spd'], label='Machine Speed (mm/s)')
+        ax2.set_title('Machine speed (mm/s)')
+        ax2.set_ylabel('Speed of TCP (mm/s)')
     ax2.set_xlabel('Time')
-    ax2.set_ylabel('Force of loadcell (N)')
     ax2.legend()
 
     plt.xticks(rotation=45)
