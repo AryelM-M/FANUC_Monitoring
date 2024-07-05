@@ -6,7 +6,7 @@ import sys
 
 # Change to 1 if you want to compare machine data with loadcell data.
 # You need to save the loadcell data in a csv file named 'ldcl_' + the name of the other csv file
-USE_LOADCELL_DATA = 0
+USE_LOADCELL_DATA = 1
 # Change the duration in seconds of a sample after a hit
 SAMPLE_TIME = 60
 
